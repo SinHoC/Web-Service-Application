@@ -11,5 +11,11 @@ public class GreetingController {
 
         return "Hello! Andy's webpage.";
     }
+    
+    @RequestMapping("/melvin")
+    public String melvinGreeting(){
+
+        return "Wow, you reached Melvin's message!";
+    }
 
 }
