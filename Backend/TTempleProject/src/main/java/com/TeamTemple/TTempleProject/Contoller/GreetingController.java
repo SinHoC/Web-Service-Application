@@ -19,13 +19,13 @@ public class GreetingController {
     }
     
      @RequestMapping("/Jiayue")
-    public String getGreeting(){
+    public String jiayueGreeting(){
 
         return "Hello, welcome to jiayue's homepage.";
     }
     
     @RequestMapping("/SinHo")
-    public String getGreeting(){
+    public String sinhoGreeting(){
 
         return "Hello! Welcome to SinHo's homepage";
     }
