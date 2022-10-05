@@ -23,6 +23,12 @@ public class GreetingController {
 
         return "Hello, welcome to jiayue's homepage.";
     }
+    
+    @RequestMapping("/SinHo")
+    public String getGreeting(){
+
+        return "Hello! Welcome to SinHo's homepage";
+    }
 
     
 }
