@@ -17,5 +17,12 @@ public class GreetingController {
 
         return "Wow, you reached Melvin's message!";
     }
+    
+     @RequestMapping("/Jiayue")
+    public String getGreeting(){
 
+        return "Hello, welcome to jiayue's homepage.";
+    }
+
+    
 }
