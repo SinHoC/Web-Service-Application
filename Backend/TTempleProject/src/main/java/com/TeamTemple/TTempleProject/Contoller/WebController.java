@@ -28,6 +28,9 @@ public class WebController {
 
     @RequestMapping("/A")
     public void someString(){
+        ImmutableList<String> immutableList = ImmutableList.of("Geeks", "For", "Geeks");
+        System.out.println(immutableList);
+
     	List<String> fruits = Lists.newArrayList("orange", "banana", "kiwi", 
                 "mandarin", "date", "quince");
     	
