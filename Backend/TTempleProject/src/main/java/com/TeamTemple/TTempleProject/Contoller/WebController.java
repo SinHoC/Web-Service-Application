@@ -1,10 +1,15 @@
 package com.TeamTemple.TTempleProject.Contoller;
 
-import java.util.Random;
-
 import org.apache.commons.math3.stat.Frequency;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.google.common.collect.*;
+
+import java.util.List;
+import java.util.Random;
+
 
 @RestController
 public class WebController {
@@ -20,5 +25,22 @@ public class WebController {
         double cumFreq = f.getCumPct(10);
         return "Unique Numbers: " + unique + "\n Percentage of numbers less than or equal to 10: " + cumFreq;
     }
+
+    @RequestMapping("/A")
+    public void someString(){
+    	List<String> fruits = Lists.newArrayList("orange", "banana", "kiwi", 
+                "mandarin", "date", "quince");
+    	
+    	for (String fruit: fruits) {
+    		System.out.println(fruit);
+
+    	}
+
+
+    }
+
+
+
+
 
 }
