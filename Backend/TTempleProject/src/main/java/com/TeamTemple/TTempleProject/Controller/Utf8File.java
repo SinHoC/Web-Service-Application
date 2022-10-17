@@ -1,4 +1,4 @@
-package com.TeamTemple.TTempleProject.Contoller;
+package com.TeamTemple.TTempleProject.Controller;
 
 import java.io.File;
 import java.io.FileInputStream;
