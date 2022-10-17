@@ -1,4 +1,4 @@
-package com.TeamTemple.TTempleProject.Contoller;
+package com.TeamTemple.TTempleProject.Controller;
 
 import org.apache.commons.math3.stat.Frequency;
 
@@ -20,15 +20,16 @@ import org.jsoup.select.*;
 public class WebController {
 
     @RequestMapping("/frequency")
-    public String someMath() {
+    public double[] someMath() {
+        double[] result = new double[2];
         Frequency f = new Frequency();
         Random rand = new Random();
         for (int i = 0; i < 20; i++) {
             f.addValue(rand.nextInt(21));
         }
-        int unique = f.getUniqueCount();
-        double cumFreq = f.getCumPct(10);
-        return "Unique Numbers: " + unique + "\n Percentage of numbers less than or equal to 10: " + cumFreq;
+        result[0] = f.getUniqueCount();
+        result[1] = f.getCumPct(10);
+        return result;
     }
 
     @RequestMapping("/A")
