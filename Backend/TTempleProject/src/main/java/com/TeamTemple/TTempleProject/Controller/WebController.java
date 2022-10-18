@@ -33,17 +33,9 @@ public class WebController {
     }
 
     @RequestMapping("/A")
-    public void someString() {
-        ImmutableList<String> immutableList = ImmutableList.of("Geeks", "For", "Geeks");
-        System.out.println(immutableList);
+    public int multiply(int a, int b) {
+        return a*b;
 
-        List<String> fruits = Lists.newArrayList("orange", "banana", "kiwi",
-                "mandarin", "date", "quince");
-
-        for (String fruit : fruits) {
-            System.out.println(fruit);
-
-        }
     }
 
     @RequestMapping("/C")
