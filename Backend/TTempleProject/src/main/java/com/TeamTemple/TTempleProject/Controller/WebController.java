@@ -37,6 +37,12 @@ public class WebController {
         return a*b;
 
     }
+    
+        @RequestMapping("/Subtraction")
+    public int subtract(int a, int b) {
+        return a-b;
+
+    }
 
     @RequestMapping("/C")
     public void soup() {
