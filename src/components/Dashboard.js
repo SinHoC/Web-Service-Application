@@ -20,13 +20,14 @@ import { mainListItems } from './listItems';
 import Deposits from './Deposits';
 import Deposits2 from './Deposits2';
 import logo from './logo.png';
+import { BroncoButton } from './styles';
 
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        What's that?
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -93,6 +94,15 @@ const darkTheme = createTheme({
   },
 });
 
+// Change for toolbar color
+const greenTheme = createTheme({
+  palette: {
+    primary: {
+      main: '#15c232',
+    },
+  },
+});
+
 function HomeContent() {
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
@@ -108,7 +118,7 @@ function HomeContent() {
             <Toolbar
               sx={{
                 pr: '24px', // keep right padding when drawer closed
-              }}
+              }} theme = {greenTheme}
             >
               <IconButton
                 edge="start"
@@ -134,6 +144,8 @@ function HomeContent() {
               >
                 Billy's Bites
               </Typography>
+              <BroncoButton href="https://billysbites.auth.us-west-2.amazoncognito.com/login?client_id=2kugeanvc4vklvudpiob4ska79&response_type=code&scope=email+openid+phone&redirect_uri=http://localhost:3000/" 
+              variant='contained'>Sign In</BroncoButton>
             </Toolbar>
           </AppBar>
         </ThemeProvider>
