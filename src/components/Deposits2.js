@@ -16,44 +16,14 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
+import { BroncoButton } from './styles';
+import { modalStyle } from './styles';
+
 
 
 function preventDefault(event) {
   event.preventDefault();
 }
-
-const modalStyle = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-  '& .MuiTextField-root': { m: 1, width: '25ch' },
-};
-
-const joinButtonTheme = createTheme({
-  palette: {
-    neutral: {
-      //green
-      main: '009933',
-      darker: '004d1a',
-      contrastText: '#000',
-    }
-  },
-});
-
-const BroncoButton = styled(Button)(({ theme }) => ({
-  color: 'white',
-  backgroundColor: green[500],
-  '&:hover': {
-    backgroundColor: green[700],
-  },
-}));
-
 
 export default function Deposits2() {
 
