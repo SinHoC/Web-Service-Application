@@ -11,13 +11,18 @@ import { styled } from '@mui/material/styles';
 import { green } from '@mui/material/colors';
 import AddIcon from '@mui/icons-material/Add';
 import IconButton from '@mui/material/IconButton';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import { BroncoButton } from './styles';
 import { modalStyle } from './styles';
+import Axios from 'axios';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import Container from '@mui/material/Container';
+
 
 
 
@@ -40,55 +45,79 @@ export default function Deposits() {
     console.log(counter);
   };
 
+  const [orders, setOrderData] = useState([{}])
+  useEffect(() => {
+    Axios.get('http://ec2-35-165-76-196.us-west-2.compute.amazonaws.com:8080/api/order1').then((res) => {
+      console.log(res.data);
+      setOrderData(res.data);
+    })
+  }, [])
+
   return (
-    <React.Fragment>
-      <Title>Melvin Chiem-Ngoy</Title>
-      <Typography color="text.secondary" sx={{ flex: 1 }}>
-        <LocalPhoneIcon/>
-        123-456-7890
-      </Typography>
-      <Typography component="p" variant="h4">
-        McDonald's
-      </Typography>
-      <Typography color="text.secondary" sx={{ flex: 1 }}>
-        Expected Pickup: 12:30 P.M
-      </Typography>
-      <Typography color="text.secondary" sx={{ flex: 1 }}>
-        Expected Arrival: 1:00 P.M
-      </Typography>
-      <Typography color="text.secondary" sx={{ flex: 2 }}>
-        Meeting Location: Outside building 8
-      </Typography>
-      <div>
-        <BroncoButton onClick={handleOpen} variant='contained'>Join Order</BroncoButton>
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={modalStyle} component='form'>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-              Enter item to order:
-            </Typography>
-            {Array.from(Array(counter)).map((c, index) => {
-              return (
-                <div>
-                  <TextField label='Enter item...' variant='outlined' sx={{ flex: 2 }} />
-                </div>
-              )
-            })}
-            <ListItemButton aria-label="add" onClick={handleAddTextField}>
-              <ListItemIcon>
-                <AddIcon />
-              </ListItemIcon>
-              <ListItemText primary="Add more items" />
-            </ListItemButton>
-            <BroncoButton variant='contained'>Submit</BroncoButton>
-          </Box>
-        </Modal>
-      </div>
-    </React.Fragment>
+    <Grid container spacing={3}>
+      {orders.map((order) => (
+        <Grid item xs={12} md={4} lg={3}>
+          <Paper
+            sx={{
+              p: 2,
+              display: 'flex',
+              flexDirection: 'column',
+              height: 'auto',
+            }}
+          >
+            <React.Fragment>
+              <Title>{order.name}</Title>
+              <Typography color="text.secondary" sx={{ flex: 1 }}>
+                <LocalPhoneIcon />
+                {order.phoneNumber}
+              </Typography>
+              <Typography component="p" variant="h4">
+                McDonald's
+              </Typography>
+              <Typography color="text.secondary" sx={{ flex: 1 }}>
+                Expected Pickup: 12:30 P.M
+              </Typography>
+              <Typography color="text.secondary" sx={{ flex: 1 }}>
+                Expected Arrival: 1:00 P.M
+              </Typography>
+              <Typography color="text.secondary" sx={{ flex: 2 }}>
+                Meeting Location: Outside building 8
+              </Typography>
+              <div>
+                <BroncoButton onClick={handleOpen} variant='contained'>Join Order</BroncoButton>
+                <Modal
+                  open={open}
+                  onClose={handleClose}
+                  aria-labelledby="modal-modal-title"
+                  aria-describedby="modal-modal-description"
+                >
+                  <Box sx={modalStyle} component='form'>
+                    <Typography id="modal-modal-title" variant="h6" component="h2">
+                      Enter item to order:
+                    </Typography>
+                    {Array.from(Array(counter)).map((c, index) => {
+                      return (
+                        <div>
+                          <TextField label='Enter item...' variant='outlined' sx={{ flex: 2 }} />
+                        </div>
+                      )
+                    })}
+                    <ListItemButton aria-label="add" onClick={handleAddTextField}>
+                      <ListItemIcon>
+                        <AddIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="Add more items" />
+                    </ListItemButton>
+                    <BroncoButton variant='contained'>Submit</BroncoButton>
+                  </Box>
+                </Modal>
+              </div>
+            </React.Fragment>
+          </Paper>
+        </Grid>
+      ))}
+
+    </Grid>
 
   );
 }
