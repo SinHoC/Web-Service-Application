@@ -54,34 +54,36 @@ public class WebController {
         list.add(order3);
         
         return list;
+
+    @RequestMapping("/A")
+    public int multiply(int a, int b) {
+        return a*b;
+
     }
-//
-//    @RequestMapping("/A")
-//    public void someString() {
-//        ImmutableList<String> immutableList = ImmutableList.of("Geeks", "For", "Geeks");
-//        System.out.println(immutableList);
-//
-//        List<String> fruits = Lists.newArrayList("orange", "banana", "kiwi",
-//                "mandarin", "date", "quince");
-//
-//        for (String fruit : fruits) {
-//            System.out.println(fruit);
-//
-//        }
-//    }
-//
-//    @RequestMapping("/C")
-//    public void soup() {
-//        try {
-//            String url = "http://ocw.mit.edu/courses/aeronautics-and-astronautics/16-050-thermal-energy-fall-2002/";
-//            Document doc = Jsoup.connect(url).get();
-//            Elements paragraphs = doc.select("p");
-//            for (Element p : paragraphs) {
-//                System.out.println(p.text());
-//            }
-//        } catch (IOException ex) {
-//            Logger.getLogger(WebController.class.getName())
-//                    .log(Level.SEVERE, null, ex);
-//        }
-//    }
-}
+    
+        @RequestMapping("/Subtraction")
+    public int subtract(int a, int b) {
+        return a-b;
+
+    }
+    
+    @RequestMapping("/Calculator")
+    public int Calculator(int a, int b) {
+        return a+b;
+
+    }
+    
+
+    @RequestMapping("/C")
+    public void soup() {
+        try {
+            String url = "http://ocw.mit.edu/courses/aeronautics-and-astronautics/16-050-thermal-energy-fall-2002/";
+            Document doc = Jsoup.connect(url).get();
+            Elements paragraphs = doc.select("p");
+            for (Element p : paragraphs) {
+                System.out.println(p.text());
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(WebController.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
