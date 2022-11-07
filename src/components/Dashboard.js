@@ -126,6 +126,7 @@ function HomeContent() {
   
   const tryLogIn = () => {
     if (localStorage.getItem('token') == null) {
+      // If local storage empty AND has in URL is not empty
       if (window.location.hash != null && window.location.hash != ""){
         localStorage.setItem('token', window.location.hash);
         var token = localStorage.getItem('token');
@@ -135,11 +136,22 @@ function HomeContent() {
       
         var decode = jwt(idToken);
         console.log(decode);
-        localStorage.clear();
   
         // Set state that user is logged in
         logIn();
       }
+    }
+    // Else hash in URL is empty, but local storage has token
+    // The user logged in, did not log out, and reloaded the page w/o id token in URL
+    else{
+      var token = localStorage.getItem('token');
+      console.log(token);
+      var idToken = token.substring(token.indexOf("=") + 1, token.indexOf("&"));
+      console.log(idToken);
+    
+      var decode = jwt(idToken);
+      console.log(decode);
+      logIn();
     }
   }
 
