@@ -21,6 +21,9 @@ import Deposits from './Deposits';
 import Deposits2 from './Deposits2';
 import logo from './logo.png';
 import { BroncoButton } from './styles';
+import { WindowSharp } from '@mui/icons-material';
+import jwt from 'jwt-decode';
+
 
 function Copyright(props) {
   return (
@@ -105,9 +108,46 @@ const greenTheme = createTheme({
 
 function HomeContent() {
   const [open, setOpen] = React.useState(true);
+  const [login, setLogin] = React.useState(false);
+
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
+  const logOut = () => {
+    setLogin(!login);
+    localStorage.clear();
+    window.location.href = "http://localhost:3000/"
+  }
+
+  const logIn = () => {
+    setLogin(!login);
+  }
+  
+  const tryLogIn = () => {
+    if (localStorage.getItem('token') == null) {
+      if (window.location.hash != null && window.location.hash != ""){
+        localStorage.setItem('token', window.location.hash);
+        var token = localStorage.getItem('token');
+        console.log(token);
+        var idToken = token.substring(token.indexOf("=") + 1, token.indexOf("&"));
+        console.log(idToken);
+      
+        var decode = jwt(idToken);
+        console.log(decode);
+        localStorage.clear();
+  
+        // Set state that user is logged in
+        logIn();
+      }
+    }
+  }
+
+
+  window.onload = function() {
+    tryLogIn()
+  }
+
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -144,8 +184,12 @@ function HomeContent() {
               >
                 Billy's Bites
               </Typography>
-              <BroncoButton href="https://billysbites.auth.us-west-2.amazoncognito.com/login?client_id=2kugeanvc4vklvudpiob4ska79&response_type=code&scope=email+openid+phone&redirect_uri=http://localhost:3000/" 
-              variant='contained'>Sign In</BroncoButton>
+              {login 
+                ? <BroncoButton onClick={logOut}
+                variant='contained'>Log Out</BroncoButton>
+                : <BroncoButton href="https://billysbites.auth.us-west-2.amazoncognito.com/login?client_id=2kugeanvc4vklvudpiob4ska79&response_type=token&scope=email+openid+phone+profile&redirect_uri=http://localhost:3000/" 
+                variant='contained'>Log In</BroncoButton>
+              }
             </Toolbar>
           </AppBar>
         </ThemeProvider>
