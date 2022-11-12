@@ -89,10 +89,9 @@ const tryLogIn = () => {
     }
 }
 
-
-window.onload = function () {
+window.addEventListener('load', function(){
     tryLogIn()
-}
+})
 
   return (
     <ThemeProvider theme={darkTheme}>

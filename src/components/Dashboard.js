@@ -1,15 +1,14 @@
 import * as React from 'react';
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
-import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import Deposits from './Deposits';
-
+import { BroncoButton } from './styles';
+import Grid from '@mui/material/Grid';
 
 function Copyright(props) {
   return (
@@ -26,7 +25,28 @@ function Copyright(props) {
 
 const mdTheme = createTheme();
 
+const createOrder = () =>(
+  <BroncoButton>
+    + Create An Order
+   </BroncoButton>
+)
+
 function HomeContent() {
+  const[homeLogin, setHomeLogin] = React.useState(false)
+
+  const checkLogin = () => {
+    if(localStorage.getItem('token') != null){
+      setHomeLogin(true)
+    }
+    else{
+      setHomeLogin(false)
+    }
+  }
+
+  window.addEventListener('load', function(){
+    checkLogin()
+  })
+
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
@@ -44,9 +64,15 @@ function HomeContent() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 6, mb: 4 }}>
-                    <Deposits />
-            <Copyright sx={{ pt: 4 }} />
+          <Grid container justifyContent="center">
+            {homeLogin
+            ? <BroncoButton>+ Create An Order</BroncoButton>
+            : <></>
+            }
+          </Grid>
+          <Container maxWidth="lg" sx={{ mt: 2, mb: 4 }}>
+            <Deposits />
+          <Copyright sx={{ pt: 4 }} />
           </Container>
         </Box>
       </Box>
