@@ -1,29 +1,22 @@
 import * as React from 'react';
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
-import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
 import Link from '@mui/material/Link';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import { mainListItems } from './listItems';
 import Deposits from './Deposits';
-import Deposits2 from './Deposits2';
-import logo from './logo.png';
 import { BroncoButton } from './styles';
-import { WindowSharp } from '@mui/icons-material';
-import jwt from 'jwt-decode';
-
+import Grid from '@mui/material/Grid';
+import { modalStyle } from './styles';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { MobileTimePicker } from '@mui/x-date-pickers/MobileTimePicker';
+import Modal from '@mui/material/Modal';
+import TextField from '@mui/material/TextField';
+import Stack from '@mui/material/Stack';
+import { useForm } from "react-hook-form";
 
 function Copyright(props) {
   return (
@@ -38,181 +31,58 @@ function Copyright(props) {
   );
 }
 
-const drawerWidth = 240;
-
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(['width', 'margin'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
-
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    '& .MuiDrawer-paper': {
-      position: 'relative',
-      whiteSpace: 'nowrap',
-      width: drawerWidth,
-      transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      boxSizing: 'border-box',
-      ...(!open && {
-        overflowX: 'hidden',
-        transition: theme.transitions.create('width', {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.leavingScreen,
-        }),
-        width: theme.spacing(7),
-        [theme.breakpoints.up('sm')]: {
-          width: theme.spacing(9),
-        },
-      }),
-    },
-  }),
-);
-
-const orderItems = [1]
-
 const mdTheme = createTheme();
 
-// Change for toolbar color
-const darkTheme = createTheme({
-  palette: {
-    primary: {
-      main: '#dcddde',
-    },
-  },
-});
-
-// Change for toolbar color
-const greenTheme = createTheme({
-  palette: {
-    primary: {
-      main: '#15c232',
-    },
-  },
-});
+const createOrder = () => (
+  <BroncoButton>
+    + Create An Order
+  </BroncoButton>
+)
 
 function HomeContent() {
-  const [open, setOpen] = React.useState(true);
-  const [login, setLogin] = React.useState(false);
+  const [homeLogin, setHomeLogin] = React.useState(false)
+  const [orderOpen, setOrderOpen] = React.useState(false)
+  const [pickup, setPickup] = React.useState(null)
+  const [arrival, setArrival] = React.useState(null)
 
-  const toggleDrawer = () => {
-    setOpen(!open);
-  };
+  const { register, handleSubmit } = useForm();
 
-  const logOut = () => {
-    setLogin(!login);
-    localStorage.clear();
-    window.location.href = "http://localhost:3000/"
-  }
-
-  const logIn = () => {
-    setLogin(!login);
-  }
-  
-  const tryLogIn = () => {
-    if (localStorage.getItem('token') == null) {
-      if (window.location.hash != null && window.location.hash != ""){
-        localStorage.setItem('token', window.location.hash);
-        var token = localStorage.getItem('token');
-        console.log(token);
-        var idToken = token.substring(token.indexOf("=") + 1, token.indexOf("&"));
-        console.log(idToken);
-      
-        var decode = jwt(idToken);
-        console.log(decode);
-        localStorage.clear();
-  
-        // Set state that user is logged in
-        logIn();
-      }
+  const checkLogin = () => {
+    if (localStorage.getItem('token') != null) {
+      setHomeLogin(true)
+    }
+    else {
+      setHomeLogin(false)
     }
   }
 
-
-  window.onload = function() {
-    tryLogIn()
+  const addOrder = () => {
+    setOrderOpen(true);
   }
 
+  const handleOrderClose = () => {
+    setOrderOpen(false);
+  }
+
+  React.useEffect(() => {
+    if(orderOpen){
+      setPickup(null)
+      setArrival(null)
+    }
+  }, [orderOpen])
+
+  const submitted = (values) => {
+    console.log(values)
+  }
+
+  window.addEventListener('load', function () {
+    checkLogin()
+  })
 
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <ThemeProvider theme={darkTheme}>
-          <AppBar position="absolute" open={open}>
-            <Toolbar
-              sx={{
-                pr: '24px', // keep right padding when drawer closed
-              }} theme = {greenTheme}
-            >
-              <IconButton
-                edge="start"
-                color="inherit"
-                aria-label="open drawer"
-                onClick={toggleDrawer}
-                sx={{
-                  marginRight: '36px',
-                  ...(open && { display: 'none' }),
-                }}
-              >
-                <MenuIcon />
-              </IconButton>
-              <div class='col-md-4'>
-                <img src={logo} width={100} height={100} alt="logo" />
-              </div>
-              <Typography
-                component="h1"
-                variant="h6"
-                color="inherit"
-                noWrap
-                sx={{ flexGrow: 1 }}
-              >
-                Billy's Bites
-              </Typography>
-              {login 
-                ? <BroncoButton onClick={logOut}
-                variant='contained'>Log Out</BroncoButton>
-                : <BroncoButton href="https://billysbites.auth.us-west-2.amazoncognito.com/login?client_id=2kugeanvc4vklvudpiob4ska79&response_type=token&scope=email+openid+phone+profile&redirect_uri=http://localhost:3000/" 
-                variant='contained'>Log In</BroncoButton>
-              }
-            </Toolbar>
-          </AppBar>
-        </ThemeProvider>
-        <Drawer variant="permanent" open={open}>
-          <Toolbar
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-              px: [5],
-            }}
-          >
-            <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </Toolbar>
-          <Divider />
-          <List component="nav">
-            {/* {mainListItems} */}
-            <Divider sx={{ my: 3 }} />
-            {mainListItems}
-          </List>
-        </Drawer>
         <Box
           component="main"
           sx={{
@@ -226,8 +96,64 @@ function HomeContent() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 6, mb: 4 }}>
-                    <Deposits />
+          <Grid container justifyContent="center">
+            {homeLogin
+              ? <div><BroncoButton onClick={addOrder}>+ Create An Order</BroncoButton>
+                <Modal
+                  open={orderOpen}
+                  onClose={handleOrderClose}
+                  aria-labelledby="modal-modal-title"
+                  aria-describedby="modal-modal-description"
+                >
+                  <Box sx={modalStyle} component='form' onSubmit={handleSubmit(submitted)}>
+                    <Typography id="modal-modal-title" variant="h6" component="h2">
+                      Enter item to order:
+                    </Typography>
+                    <TextField
+                      name="resturant"
+                      required
+                      label="Resturant name"
+                      {...register('resturantName')}
+                    />
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <Stack spacing={3}>
+                        <MobileTimePicker
+                          name="pickupTime"
+                          label="Estimated pickup time"
+                          value={pickup}
+                          required
+                          onChange={(newValue) => {
+                            setPickup(newValue)
+                          }}
+                          renderInput={(params) => <TextField {...params} {...register('pickupTime')}/>}
+                        />
+                        <MobileTimePicker
+                          name="arrivalTime"
+                          label="Estimated arrival time"
+                          value={arrival}
+                          required
+                          onChange={(newValue) => {
+                            setArrival(newValue)
+                          }}
+                          renderInput={(params) => <TextField {...params} {...register('arrivalTime')} />}
+                        />
+                      </Stack>
+                    </LocalizationProvider>
+                    <TextField
+                      name="meetingLocation"
+                      required
+                      label="Meeting location"
+                      {...register('meetingTime')}
+                    />
+                    <BroncoButton variant='contained' type='submit'>Submit</BroncoButton>
+                  </Box>
+                </Modal>
+              </div>
+              : <></>
+            }
+          </Grid>
+          <Container maxWidth="lg" sx={{ mt: 2, mb: 4 }}>
+            <Deposits />
             <Copyright sx={{ pt: 4 }} />
           </Container>
         </Box>
