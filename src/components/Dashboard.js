@@ -39,19 +39,11 @@ const createOrder = () => (
   </BroncoButton>
 )
 
-const defaultInputValues = {
-  resturantName: '',
-  pickupTime: '',
-  arrivalTime: '',
-  meetingLocation: ''
-}
-
 function HomeContent() {
   const [homeLogin, setHomeLogin] = React.useState(false)
   const [orderOpen, setOrderOpen] = React.useState(false)
   const [pickup, setPickup] = React.useState(null)
   const [arrival, setArrival] = React.useState(null)
-  const [values, setValues] = React.useState(defaultInputValues)
 
   const { register, handleSubmit } = useForm();
 
