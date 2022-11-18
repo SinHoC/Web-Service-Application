@@ -110,10 +110,10 @@ function HomeContent() {
                       Enter item to order:
                     </Typography>
                     <TextField
-                      name="resturant"
+                      name="restaurant"
                       required
-                      label="Resturant name"
-                      {...register('resturantName')}
+                      label="Restaurant name"
+                      {...register('restaurantName')}
                     />
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <Stack spacing={3}>
