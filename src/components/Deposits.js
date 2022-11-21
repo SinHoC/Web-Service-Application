@@ -47,7 +47,10 @@ export default function Deposits() {
 
   const [orders, setOrderData] = useState([{}])
   useEffect(() => {
-    Axios.get('http://ec2-35-165-76-196.us-west-2.compute.amazonaws.com:8080/api/order1').then((res) => {
+    // CHANGE LINK
+    // DEPLOYMENT: billysbitescpp.com:8080/api/order1
+    // DEVELOPMENT: http://ec2-54-202-111-166.us-west-2.compute.amazonaws.com:8080/api/order1
+    Axios.get('http://ec2-54-202-111-166.us-west-2.compute.amazonaws.com:8080/api/order1', { crossDomain: true }).then((res) => {
       console.log(res.data);
       setOrderData(res.data);
     })
