@@ -23,7 +23,6 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/d94e1e82d9f4dc22b901f5f59af055c9/Message/MessageTemp/35513badc370885f378c5dc4396e42cd/OpenData/jsp+servlet+mysql+订餐/Diancanxt/WebRoot/WEB-INF/lib/mysql-connector-java-5.0.0-beta-bin.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
