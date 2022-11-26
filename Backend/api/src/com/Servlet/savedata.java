@@ -52,7 +52,7 @@ public class savedata extends HttpServlet {
         }
         string3=string3;
         String sql1 = "create table if not exists "+request.getParameter("table")+" (`id` int(11) NOT NULL AUTO_INCREMENT , `creatTime` varchar(255) DEFAULT NULL, "+string+",PRIMARY KEY (`id`))";
-        request.setCharacterEncoding("utf-8");//设置编码方式，防止中文乱码
+        request.setCharacterEncoding("utf-8");//Set the encoding method
 
         String sql = "INSERT "+request.getParameter("table")+"("+string2+") VALUES("+string3+")";
         //Initialize the database connection object conn
