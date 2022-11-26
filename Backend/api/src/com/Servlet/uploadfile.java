@@ -17,104 +17,102 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
-/**
- * Created by linlixiang on 2022/1/6.
- */
+
 @WebServlet("/uploadfile")
 public class uploadfile extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    // 上传文件存储目录
+    // Upload file storage directory
     private static final String UPLOAD_DIRECTORY = "upload";
 
-    // 上传配置
+    //upload configuration
     private static final int MEMORY_THRESHOLD   = 1024 * 1024 * 3;  // 3MB
     private static final int MAX_FILE_SIZE      = 1024 * 1024 * 40; // 40MB
     private static final int MAX_REQUEST_SIZE   = 1024 * 1024 * 50; // 50MB
 
     /**
-     * 上传数据及保存文件
+     * Upload data and save files
      */
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
         response.setCharacterEncoding("utf-8");
         response.setContentType("text/html;charset=utf-8");
-        response.setHeader("Access-Control-Allow-Origin","*");//星号表示所有
+        response.setHeader("Access-Control-Allow-Origin","*");//* means all
 
-        // 检测是否为多媒体上传
+        // Detect whether it is a multimedia upload
         if (!ServletFileUpload.isMultipartContent(request)) {
-            // 如果不是则停止
+            // stop if not
             PrintWriter writer = response.getWriter();
-            writer.println("Error: 表单必须包含 enctype=multipart/form-data");
+            writer.println("Error: he form must contain enctype=multipart/form-data");
             writer.flush();
             return;
         }
 
-        // 配置上传参数
+        // Configure upload parameters
         DiskFileItemFactory factory = new DiskFileItemFactory();
-        // 设置内存临界值 - 超过后将产生临时文件并存储于临时目录中
+        // Set the memory threshold - when exceeded, temporary files will be generated and stored in the temporary directory
         factory.setSizeThreshold(MEMORY_THRESHOLD);
-        // 设置临时存储目录
+        // Set temporary storage directory
         factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
 
         ServletFileUpload upload = new ServletFileUpload(factory);
 
-        // 设置最大文件上传值
+        // Set the maximum file upload value
         upload.setFileSizeMax(MAX_FILE_SIZE);
 
-        // 设置最大请求值 (包含文件和表单数据)
+        // Set the maximum request value (including file and form data)
         upload.setSizeMax(MAX_REQUEST_SIZE);
 
-        // 中文处理
+        // Chinese processing
         upload.setHeaderEncoding("UTF-8");
 
-        // 构造临时路径来存储上传的文件
-        // 这个路径相对当前应用的目录
+        // Construct a temporary path to store uploaded files
+        // This path is relative to the directory of the current application
         String uploadPath = getServletContext().getRealPath("/") + File.separator + UPLOAD_DIRECTORY;
 
         String filePath="";
         String filePathr="";
-        // 如果目录不存在则创建
+        // Create the directory if it does not exist
         File uploadDir = new File(uploadPath);
         if (!uploadDir.exists()) {
             uploadDir.mkdir();
         }
 
         try {
-            // 解析请求的内容提取文件数据
+            // Parse the content of the request to extract the file data
             @SuppressWarnings("unchecked")
             List<FileItem> formItems = upload.parseRequest(request);
 
             if (formItems != null && formItems.size() > 0) {
-                // 迭代表单数据
+                // iterate form data
                 for (FileItem item : formItems) {
-                    // 处理不在表单中的字段
+                    // Handle fields not in the form
                     if (!item.isFormField()) {
                         String fileName = new File(item.getName()).getName();
                         filePath = uploadPath + File.separator + fileName;
                         filePathr="/"+UPLOAD_DIRECTORY+File.separator + fileName;
                         File storeFile = new File(filePath);
-                        // 在控制台输出文件的上传路径
+                        // The upload path of the output file in the console
                         System.out.println(filePath);
-                        // 保存文件到硬盘
+                        //save file to hard drive
                         item.write(storeFile);
                         request.setAttribute("message",
-                                "文件上传成功!");
+                                "File uploaded successfully!");
                     }
                 }
             }
         } catch (Exception ex) {
             request.setAttribute("message",
-                    "错误信息: " + ex.getMessage());
+                    "Error message: " + ex.getMessage());
         }
-        Map<String,Object> resMap = new HashMap<>();    // 使用Map存储键值对
-        resMap.put("msg","操作成功");   // 向Map对象中添加内容
-        resMap.put("path",filePathr);   // 向Map对象中添加内容
+        Map<String,Object> resMap = new HashMap<>();    // Use Map to store key-value pairs
+        resMap.put("msg","Successful operation");   // Add content to the Map object
+        resMap.put("path",filePathr);   // Add content to the Map object
 
         System.out.println(resMap);
-        String resJSON = JSON.toJSONString(resMap);     // 转换为json
+        String resJSON = JSON.toJSONString(resMap);     // convert to json
         PrintWriter out = response.getWriter();
-        out.print(resJSON); // 输出
+        out.print(resJSON); // output
 
     }
 }
