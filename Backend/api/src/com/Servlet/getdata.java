@@ -128,7 +128,7 @@ public class getdata extends HttpServlet {
         }
         Map<String,Object> resMap = new HashMap<>();    // Use Map to store key-value pairs
         resMap.put("data",blist2);   // Use Map to store key-value pairs
-        resMap.put("msg","操作成功");   // Use Map to store key-value pairs
+        resMap.put("msg","Successful operation");   // Use Map to store key-value pairs
         System.out.println(resMap);
         String resJSON = JSON.toJSONString(resMap);     // convert to json
         PrintWriter out = response.getWriter();
