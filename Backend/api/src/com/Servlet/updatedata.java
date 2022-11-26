@@ -12,17 +12,17 @@ import java.io.PrintWriter;
 import java.sql.*;
 import java.util.*;
 
-//使用注解的方式来访问我们的servlet
+//Use annotations to access servlet
 @WebServlet("/updatedata")
 public class updatedata extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setHeader("Access-Control-Allow-Origin","*");//星号表示所有
+        response.setHeader("Access-Control-Allow-Origin","*");//* means all
 
-        Enumeration<String> e = request.getParameterNames();//获得所有的参数名称
+        Enumeration<String> e = request.getParameterNames();//get all parameter names
         List list =new ArrayList();
-        while(e.hasMoreElements()){  //遍历Enumeration
-            String str = (String)e.nextElement(); //取出下一个元素值
+        while(e.hasMoreElements()){  //traverse Enumeration
+            String str = (String)e.nextElement(); //get the next element value
 
             if(str.equals("table")){
                 continue;
@@ -51,24 +51,24 @@ public class updatedata extends HttpServlet {
             }
         }
         string3=string3;
-        request.setCharacterEncoding("utf-8");//设置编码方式，防止中文乱码
+        request.setCharacterEncoding("utf-8");//Set the encoding method
 
         String sql = "UPDATE  "+request.getParameter("table")+" set "+string3+" WHERE `id`='"+request.getParameter("id")+"'";
 
-        //初始化数据库连接对象conn
+        //Initialize the database connection object conn
         Connection conn = null;
-        //利用try...catch处理异常
+        ///try...catch, handle exception
         try {
-            //注册数据库驱动
+            //Register database driver
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e3) {
             e3.printStackTrace();
         }
         try {
-            //开始连接自己的数据库
-            //test是数据库名称
-            //root 一般不需要修改
-            //password:修改为自己数据库的密码
+             //Start connecting to the own database
+            //test: is the database name
+            //root: Generally do not need to modify
+            //password:Change to the password of the own database
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/javaapp??useSSL=false&characterEncoding=utf-8",
                     "root",
                     "bear");
@@ -85,11 +85,11 @@ public class updatedata extends HttpServlet {
         } catch (SQLException e3) {
             e3.printStackTrace();
         }
-        Map<String,Object> resMap = new HashMap<>();    // 使用Map存储键值对
-        resMap.put("msg","操作成功");   // 向Map对象中添加内容
-        String resJSON = JSON.toJSONString(resMap);     // 转换为json
+        Map<String,Object> resMap = new HashMap<>();    // Use Map to store key-value pairs
+        resMap.put("msg","Successful operation");   // Use Map to store key-value pairs
+        String resJSON = JSON.toJSONString(resMap);     // convert to json
         PrintWriter out = response.getWriter();
-        out.print(resJSON); // 输出
+        out.print(resJSON); // output
 
     }
 
