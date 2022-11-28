@@ -159,7 +159,7 @@
 				</span>
 			</div>
 			<button id="tianjiadianbu" class="btn btn-primary btn-sm">
-				添加<span class="atitle"></span>
+				add <span class="atitle"></span>
 			</button>
 			<button id="tianjiadianbu2" style="display: none" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addUserModal">
 				展示弹窗
@@ -496,7 +496,7 @@
 						$('#add').append('<div class="form-group">' +
 							'<label for="user_id" class="col-sm-3 control-label">' + arr2[i] + '</label>' +
 							'<div class="col-sm-9">' +
-							'<input type="date" class="form-control" id="' + pinyin.getFullChars(arr2[i]) + '" name="' + pinyin.getFullChars(arr2[i]) + '" placeholder="请输入' + arr2[i] + '">' +
+							'<input type="date" class="form-control" id="' + pinyin.getFullChars(arr2[i]) + '" name="' + pinyin.getFullChars(arr2[i]) + '" placeholder="enter ' + arr2[i] + '">' +
 							'</div>' +
 							'</div>')
 					}
@@ -513,7 +513,7 @@
 						$('#add').append('<div class="form-group">' +
 							'<label for="user_id" class="col-sm-3 control-label">' + arr2[i] + '</label>' +
 							'<div class="col-sm-9">' +
-							'<input type="text" class="form-control" id="' + pinyin.getFullChars(arr2[i]) + '" name="' + pinyin.getFullChars(arr2[i]) + '" placeholder="请输入' + arr2[i] + '">' +
+							'<input type="text" class="form-control" id="' + pinyin.getFullChars(arr2[i]) + '" name="' + pinyin.getFullChars(arr2[i]) + '" placeholder="enter ' + arr2[i] + '">' +
 							'</div>' +
 							'</div>')
 					}

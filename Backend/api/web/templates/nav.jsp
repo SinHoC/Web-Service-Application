@@ -46,7 +46,7 @@
 </style>
 
 <nav>
-	<span style="float: left;line-height: 50px;color: white;margin-left: 15px">人力资源管理系统</span>
+	<span style="float: left;line-height: 50px;color: white;margin-left: 15px">order system</span>
 	<div class="container">
 		<ul id="ding">
 			<!-- <li><a href="#">首页</a></li>
@@ -112,12 +112,29 @@
 
                ,
 				{
-					"name": '退出登录',
+					"name": 'extit',
 					'url': '/index.html'
 				}
 
 			]
-		}
+		}else{
+            list=[
+                {
+                    "name":"order",
+                    'url':'table.jsp?'+
+                    'show=Name、content、picture、executionime'+
+                    ''+
+                    '&add='+
+                    'Name、content、picture、executionime'+
+                    '&fujian='+
+                    'picture'+
+                    '&fuwenben='+
+                    'content'+
+                    '&name='+
+                    'order'
+                }
+            ]
+        }
 
 	for (var i = 0; i <list.length; i++) {
 		if (list[i]["name"]==argument) {
