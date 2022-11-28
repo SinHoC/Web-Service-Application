@@ -1,5 +1,8 @@
 package com.TeamTemple.TTempleProject;
 
+import java.util.HashMap;
+import java.util.List;
+
 public class Order {
 
 	private String orderNumber;
@@ -9,8 +12,9 @@ public class Order {
 	private String pickup;
 	private String arrival;
 	private String location;
-	
-	public Order(String orderNumber, String name, String phoneNumber, String restaurant, String pickup, String arrival, String location) {
+	private HashMap<String, List<String>> customers;
+
+	public Order(String orderNumber, String name, String phoneNumber, String restaurant, String pickup, String arrival, String location, HashMap<String, List<String>> customers) {
 		this.orderNumber = orderNumber;
 		this.name = name;
 		this.phoneNumber = phoneNumber;
@@ -18,6 +22,7 @@ public class Order {
 		this.pickup = pickup;
 		this.arrival = arrival;
 		this.location = location;
+		this.customers = customers;
 	}
 	
 	public Order() {
@@ -77,6 +82,14 @@ public class Order {
 
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+	
+	public HashMap<String, List<String>> getCustomers() {
+		return customers;
+	}
+
+	public void setCustomers(HashMap<String, List<String>> customers) {
+		this.customers = customers;
 	}
 
 }

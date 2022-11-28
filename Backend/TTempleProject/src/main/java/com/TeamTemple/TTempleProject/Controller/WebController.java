@@ -17,6 +17,7 @@ import com.google.common.collect.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.io.IOException;
@@ -49,6 +50,12 @@ public class WebController {
 	}
 	
 	// Get all orders for home page
+	@PutMapping("/join")
+	public String joinOrder(@RequestParam String documentId,@RequestParam String namePhone, @RequestParam(value="customer") List<String> customer) throws InterruptedException, ExecutionException {
+		return dbService.joinOrder(documentId, namePhone, customer);
+	}
+	
+	// Get all orders for home page
 	@GetMapping("/getAll")
 	public List<Order> getAllOrders() throws InterruptedException, ExecutionException {
 		return dbService.getAllOrders();
@@ -59,6 +66,16 @@ public class WebController {
 	public List<Order> getCreatedOrders(@RequestParam String name, @RequestParam String phoneNumber) throws InterruptedException, ExecutionException {
 		return dbService.getCreatedOrders(name, phoneNumber);
 	}
+	
+	@GetMapping("/getJoined")
+	public List<Order> getJoined(@RequestParam String namePhone) throws InterruptedException, ExecutionException{
+		return dbService.getJoinedOrders(namePhone);
+	}
+	
+//	@GetMapping("/getCustomers")
+//	public Map<String, Object> getCustomers(@RequestParam String namePhone) throws InterruptedException, ExecutionException{
+//		return dbService.getCustomers(namePhone);
+//	}
 	
 	// Get all orders for home page
 	@PutMapping("/delete")
