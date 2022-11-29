@@ -18,7 +18,7 @@ import logo from './logo.png';
 import { BroncoButton } from './styles';
 import jwt from 'jwt-decode';
 
-const pages = ['Orders', 'Account'];
+const pages = ['Orders','JoinedOrders', 'Account'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 // Change for toolbar color

@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\.git\\objects",
+    "\\.git\\refs",
+    "\\Backend",
+    "\\Backend\\TTempleProject",
+    "\\Backend\\TTempleProject\\.metadata",
+    "\\Backend\\TTempleProject\\.metadata\\.plugins\\org.eclipse.core.resources\\.projects",
+    "\\Backend\\TTempleProject\\.metadata\\.plugins\\org.eclipse.core.resources\\.projects\\.org.eclipse.egit.core.cmp",
+    "\\Backend\\TTempleProject\\src",
+    "\\Backend\\TTempleProject\\src\\test"
+  ],
+  "SelectedNode": "\\src\\components\\CreatedOrders.js",
+  "PreviewInSolutionExplorer": false
+}
