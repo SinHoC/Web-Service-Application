@@ -51,7 +51,7 @@ export default function Deposits() {
     // CHANGE LINK
     // DEPLOYMENT: billysbitescpp.com:8080/api/order1
     // DEVELOPMENT: http://ec2-54-202-111-166.us-west-2.compute.amazonaws.com:8080/api/order1
-    Axios.get('http://localhost:8080/api/getAll', { crossDomain: true }).then((res) => {
+    Axios.get('http://localhost:8080/api/getCreated', { crossDomain: true }).then((res) => {
       console.log(res.data);
       setOrderData(res.data);
     })
