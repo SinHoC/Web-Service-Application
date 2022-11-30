@@ -25,6 +25,8 @@ import Container from '@mui/material/Container';
 import jwt from 'jwt-decode';
 import CssBaseline from '@mui/material/CssBaseline';
 import Toolbar from '@mui/material/Toolbar';
+import { useForm } from "react-hook-form";
+
 
 
 const mdTheme = createTheme();
@@ -34,27 +36,27 @@ function preventDefault(event) {
 }
 
 export default function Created() {
+  const { register, handleSubmit } = useForm();
+
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
 
   const [openComplete, setOpenComplete] = React.useState(false);
-  const handleOpenComplete = () => setOpenComplete(true);
+  const handleOpenComplete = event => {
+    console.log(event.currentTarget.id)
+    setCurrentOrder(event.currentTarget.id)
+    setOpenComplete(true);
+  }
 
   const handleClose = () => {
-    setCounter(1);
     setOpen(false);
   };
 
   const handleCloseComplete = () => {
     setOpenComplete(false);
   };
-  const [counter, setCounter] = useState(1);
 
-  const handleAddTextField = () => {
-    setCounter(counter + 1);
-    console.log(counter);
-  };
 
   const [orders, setOrderData] = useState(null);
 
@@ -66,13 +68,26 @@ export default function Created() {
   var phone = fullPhone.slice(1, fullPhone.length)
   console.log(phone)
 
+  const [currentOrder, setCurrentOrder] = React.useState(null);
+
+  const submitted = (values) => {
+    var orderIndex = currentOrder;
+    var documentId = orders[orderIndex].orderNumber;
+    console.log(documentId)
+
+    let url = "https://billysbitescpp.com/api/api/delete?documentId="
+    url += documentId;
+
+    Axios.put(url, { crossDomain: true })
+  }
+
   useEffect(() => {
     let isRendered = false;
 
     // CHANGE LINK
     // DEPLOYMENT: billysbitescpp.com:8080/api/order1
     // DEVELOPMENT: http://ec2-54-202-111-166.us-west-2.compute.amazonaws.com:8080/api/order1
-    Axios.get('http://localhost:8080/api/getCreated?phone=' + phone, { crossDomain: true }).then((res) => {
+    Axios.get('https://billysbitescpp.com/api/api/getCreated?phone=' + phone, { crossDomain: true }).then((res) => {
       if (!isRendered) {
         setOrderData(res.data);
         console.log(res.data);
@@ -124,7 +139,7 @@ export default function Created() {
     console.log(orders);
     return (
       <Grid container spacing={3}>
-        {orders.map((order) => (
+        {orders.map((order, orderIndex) => (
           <Grid item xs={12} md={4} lg={3}>
             <Paper
               sx={{
@@ -150,18 +165,7 @@ export default function Created() {
                 <Typography color="text.secondary" sx={{ flex: 2 }}>
                   Meeting Location: {order.location}
                 </Typography>
-                
-                <div>
-                  <BroncoButton onClick={handleOpen} variant='contained'>View Customers</BroncoButton>
-                  <Modal
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                  >
-                    <Box sx={modalStyle} component='form'>
-
-                      {Object.entries(order.customers).map(([key, value]) => (
+                {Object.entries(order.customers).map(([key, value]) => (
                         <Typography component="p" variant="h6" sx={{ flex: 2 }}>
                           <LocalPhoneIcon />
                           {key} {value[0]}:
@@ -178,23 +182,20 @@ export default function Created() {
                           </List>
                         </Typography>
                       ))}
-                    </Box>
-                  </Modal>
-                </div>
                 <div>
-                  <BroncoButton onClick={handleOpenComplete} variant='contained'>Complete Order</BroncoButton>
+                  <BroncoButton onClick={handleOpenComplete} variant='contained' id={orderIndex}>Complete Order</BroncoButton>
                   <Modal
                     open={openComplete}
                     onClose={handleCloseComplete}
                     aria-labelledby="modal-modal-title"
                     aria-describedby="modal-modal-description"
                   >
-                    <Box sx={modalStyle} component='form'>
+                    <Box sx={modalStyle} component='form' onSubmit={handleSubmit(submitted)}>
                       <Typography id="modal-modal-title" variant="h6" component="h2">
                         Are you sure you want to mark the order as complete?
                       </Typography>
 
-                      <BroncoButton variant='contained'>Confirm</BroncoButton>
+                      <BroncoButton variant='contained' type='submit'>Confirm</BroncoButton>
                     </Box>
                   </Modal>
                 </div>

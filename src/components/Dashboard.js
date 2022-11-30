@@ -17,7 +17,7 @@ import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import { useForm } from "react-hook-form";
-import { Axios } from 'axios';
+import Axios from 'axios';
 import jwt from 'jwt-decode';
 import Paper from '@mui/material/Paper';
 import Title from './Title';
@@ -78,8 +78,19 @@ function HomeContent() {
 
   const submitted = (values) => {
     console.log(values)
+    console.log(values.name)
     console.log("yo")
-    Axios.put()
+    var randomNumber = Math.floor(100000 + Math.random() * 900000)
+    Axios.post('https://billysbitescpp.com/api/api/create',{
+      orderNumber: randomNumber.toString(),
+      name: values.name,
+      phoneNumber: values.phoneNumber,
+      restaurant: values.restaurant,
+      pickup: values.pickup,
+      arrival: values.arrival,
+      location: values.location,
+      customers: {}
+    }, { crossDomain: true })
   }
 
   window.addEventListener('load', function () {
@@ -169,7 +180,7 @@ function HomeContent() {
                         name="resturant"
                         required
                         label="Resturant name"
-                        {...register('resturant')}
+                        {...register('restaurant')}
                       />
                       <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <Stack spacing={3}>

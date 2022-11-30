@@ -64,7 +64,7 @@ export default function Joined() {
     // CHANGE LINK
     // DEPLOYMENT: billysbitescpp.com:8080/api/order1
     // DEVELOPMENT: http://ec2-54-202-111-166.us-west-2.compute.amazonaws.com:8080/api/order1
-    Axios.get('http://localhost:8080/api/getJoined?phone=' + phone, { crossDomain: true }).then((res) => {
+    Axios.get('https://billysbitescpp.com/api/api/getJoined?phone=' + phone, { crossDomain: true }).then((res) => {
       if (!isRendered) {
         setOrderData(res.data);
         console.log(res.data);

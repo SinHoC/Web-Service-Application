@@ -54,7 +54,7 @@ function ResponsiveAppBar() {
   const logOut = () => {
     setLogin(!login);
     localStorage.clear();
-    window.location.href = "http://localhost:3000/"
+    window.location.href = "https://billysbitescpp.com"
 }
 
 const logIn = () => {
@@ -208,7 +208,9 @@ window.addEventListener('load', function(){
             {login
                 ? <BroncoButton onClick={logOut}
                 variant='contained'>Log Out</BroncoButton>
-                : <BroncoButton href="https://billysbites.auth.us-west-2.amazoncognito.com/login?client_id=2kugeanvc4vklvudpiob4ska79&response_type=token&scope=email+openid+phone+profile&redirect_uri=http://localhost:3000/"
+                //https://billysbites.auth.us-west-2.amazoncognito.com/login?client_id=2kugeanvc4vklvudpiob4ska79&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=https://billysbitescpp.com/
+                //https://billysbites.auth.us-west-2.amazoncognito.com/login?client_id=2kugeanvc4vklvudpiob4ska79&response_type=token&scope=email+openid+phone+profile&redirect_uri=http://localhost:3000/
+                : <BroncoButton href="https://billysbites.auth.us-west-2.amazoncognito.com/login?client_id=2kugeanvc4vklvudpiob4ska79&response_type=token&scope=email+openid+phone+profile&redirect_uri=https://billysbitescpp.com/"
                 variant='contained'>Log In</BroncoButton>
             }
                 {/* <Tooltip title="Open settings">
