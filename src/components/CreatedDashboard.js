@@ -42,7 +42,7 @@ const createOrder = () => (
   </BroncoButton>
 )
 
-function HomeContent() {
+function CreatedContent() {
   const [homeLogin, setHomeLogin] = React.useState(false)
   const [orderOpen, setOrderOpen] = React.useState(false)
   const [pickup, setPickup] = React.useState(null)
@@ -140,60 +140,9 @@ function HomeContent() {
             >
               <Toolbar />
               <Grid container justifyContent="center">
-                {homeLogin
-                  ? <div><BroncoButton onClick={addOrder}>+ Create An Order</BroncoButton>
-                    <Modal
-                      open={orderOpen}
-                      onClose={handleOrderClose}
-                      aria-labelledby="modal-modal-title"
-                      aria-describedby="modal-modal-description"
-                    >
-                      <Box sx={modalStyle} component='form' onSubmit={handleSubmit(submitted)}>
-                        <Typography id="modal-modal-title" variant="h6" component="h2">
-                          Enter item to order:
-                        </Typography>
-                        <TextField
-                          name="resturant"
-                          required
-                          label="Resturant name"
-                          {...register('resturantName')}
-                        />
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                          <Stack spacing={3}>
-                            <MobileTimePicker
-                              name="pickupTime"
-                              label="Estimated pickup time"
-                              value={pickup}
-                              required
-                              onChange={(newValue) => {
-                                setPickup(newValue)
-                              }}
-                              renderInput={(params) => <TextField {...params} {...register('pickupTime')}/>}
-                            />
-                            <MobileTimePicker
-                              name="arrivalTime"
-                              label="Estimated arrival time"
-                              value={arrival}
-                              required
-                              onChange={(newValue) => {
-                                setArrival(newValue)
-                              }}
-                              renderInput={(params) => <TextField {...params} {...register('arrivalTime')} />}
-                            />
-                          </Stack>
-                        </LocalizationProvider>
-                        <TextField
-                          name="meetingLocation"
-                          required
-                          label="Meeting location"
-                          {...register('meetingTime')}
-                        />
-                        <BroncoButton variant='contained' type='submit'>Submit</BroncoButton>
-                      </Box>
-                    </Modal>
-                  </div>
-                  : <></>
-                }
+              <Typography component="p" variant="h4">
+                  Your Created Orders
+                </Typography>
               </Grid>
               <Container maxWidth="lg" sx={{ mt: 2, mb: 4 }}>
                 <Created />
@@ -206,6 +155,6 @@ function HomeContent() {
   }
 }
 
-export default function Home() {
-  return <HomeContent />;
+export default function CreatedPage() {
+  return <CreatedContent />;
 }

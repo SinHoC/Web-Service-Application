@@ -46,7 +46,7 @@ export default function Deposits() {
   };
 
   const [orders, setOrderData] = useState([{}])
-  
+
   useEffect(() => {
     // CHANGE LINK
     // DEPLOYMENT: billysbitescpp.com:8080/api/order1
@@ -70,6 +70,9 @@ export default function Deposits() {
             }}
           >
             <React.Fragment>
+              <Typography color="text.secondary" sx={{ flex: 1 }}>
+                #{order.orderNumber}
+              </Typography>
               <Title>{order.name}</Title>
               <Typography color="text.secondary" sx={{ flex: 1 }}>
                 <LocalPhoneIcon />

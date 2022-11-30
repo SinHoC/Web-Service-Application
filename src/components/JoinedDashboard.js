@@ -41,7 +41,7 @@ const createOrder = () => (
   </BroncoButton>
 )
 
-function HomeContent() {
+function JoinedContent() {
   const [homeLogin, setHomeLogin] = React.useState(false)
   const [orderOpen, setOrderOpen] = React.useState(false)
   const [pickup, setPickup] = React.useState(null)
@@ -67,7 +67,7 @@ function HomeContent() {
   }
 
   React.useEffect(() => {
-    if(orderOpen){
+    if (orderOpen) {
       setPickup(null)
       setArrival(null)
     }
@@ -81,131 +81,80 @@ function HomeContent() {
     checkLogin()
   })
 
-  if(localStorage.getItem('token') == null){
-    return(
+  if (localStorage.getItem('token') == null) {
+    return (
       <ThemeProvider theme={mdTheme}>
         <Box sx={{ display: 'flex' }}>
           <CssBaseline />
-                <Box
-                    component="main"
-                    sx={{
-                    backgroundColor: (theme) =>
-                        theme.palette.mode === 'light'
-                        ? theme.palette.grey[100]
-                        : theme.palette.grey[900],
-                    flexGrow: 1,
-                    height: '100vh',
-                    overflow: 'auto',
-                    }}
+          <Box
+            component="main"
+            sx={{
+              backgroundColor: (theme) =>
+                theme.palette.mode === 'light'
+                  ? theme.palette.grey[100]
+                  : theme.palette.grey[900],
+              flexGrow: 1,
+              height: '100vh',
+              overflow: 'auto',
+            }}
+          >
+            <Toolbar />
+            <Grid container justifyContent="center">
+              <Grid item xs={12} md={4} lg={3}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: 'auto',
+                  }}
                 >
-                    <Toolbar />
-                        <Grid  container justifyContent="center">
-                            <Grid item xs={12} md={4} lg={3}>
-                                <Paper
-                                sx={{
-                                    p: 2,
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    height: 'auto',
-                                }}
-                                >
-                                    <React.Fragment>
-                                        <Title>You are not signed in.</Title>
-                                    </React.Fragment>
-                                </Paper>
-                            </Grid>
-                        </Grid>
-                </Box>
-            </Box>
-        </ThemeProvider>
+                  <React.Fragment>
+                    <Title>You are not signed in.</Title>
+                  </React.Fragment>
+                </Paper>
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>
+      </ThemeProvider>
     )
   }
-  else{
+  else {
     return (
-        <ThemeProvider theme={mdTheme}>
-          <Box sx={{ display: 'flex' }}>
-            <CssBaseline />
-            <Box
-              component="main"
-              sx={{
-                backgroundColor: (theme) =>
-                  theme.palette.mode === 'light'
-                    ? theme.palette.grey[100]
-                    : theme.palette.grey[900],
-                flexGrow: 1,
-                height: '100vh',
-                overflow: 'auto',
-              }}
-            >
-              <Toolbar />
-              <Grid container justifyContent="center">
-                {homeLogin
-                  ? <div><BroncoButton onClick={addOrder}>+ Create An Order</BroncoButton>
-                    <Modal
-                      open={orderOpen}
-                      onClose={handleOrderClose}
-                      aria-labelledby="modal-modal-title"
-                      aria-describedby="modal-modal-description"
-                    >
-                      <Box sx={modalStyle} component='form' onSubmit={handleSubmit(submitted)}>
-                        <Typography id="modal-modal-title" variant="h6" component="h2">
-                          Enter item to order:
-                        </Typography>
-                        <TextField
-                          name="resturant"
-                          required
-                          label="Resturant name"
-                          {...register('resturantName')}
-                        />
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                          <Stack spacing={3}>
-                            <MobileTimePicker
-                              name="pickupTime"
-                              label="Estimated pickup time"
-                              value={pickup}
-                              required
-                              onChange={(newValue) => {
-                                setPickup(newValue)
-                              }}
-                              renderInput={(params) => <TextField {...params} {...register('pickupTime')}/>}
-                            />
-                            <MobileTimePicker
-                              name="arrivalTime"
-                              label="Estimated arrival time"
-                              value={arrival}
-                              required
-                              onChange={(newValue) => {
-                                setArrival(newValue)
-                              }}
-                              renderInput={(params) => <TextField {...params} {...register('arrivalTime')} />}
-                            />
-                          </Stack>
-                        </LocalizationProvider>
-                        <TextField
-                          name="meetingLocation"
-                          required
-                          label="Meeting location"
-                          {...register('meetingTime')}
-                        />
-                        <BroncoButton variant='contained' type='submit'>Submit</BroncoButton>
-                      </Box>
-                    </Modal>
-                  </div>
-                  : <></>
-                }
-              </Grid>
-              <Container maxWidth="lg" sx={{ mt: 2, mb: 4 }}>
-                <Joined />
-                <Copyright sx={{ pt: 4 }} />
-              </Container>
-            </Box>
+      <ThemeProvider theme={mdTheme}>
+        <Box sx={{ display: 'flex' }}>
+          <CssBaseline />
+          <Box
+            component="main"
+            sx={{
+              backgroundColor: (theme) =>
+                theme.palette.mode === 'light'
+                  ? theme.palette.grey[100]
+                  : theme.palette.grey[900],
+              flexGrow: 1,
+              height: '100vh',
+              overflow: 'auto',
+            }}
+          >
+            <Toolbar />
+            <Grid container justifyContent="center">
+              <Typography component="p" variant="h4">
+                Your Joined Orders
+              </Typography>
+            </Grid>
+            <Container maxWidth="lg" sx={{ mt: 2, mb: 4 }}>
+              <Joined />
+              <Copyright sx={{ pt: 4 }} />
+            </Container>
           </Box>
-        </ThemeProvider>
-      );
+        </Box>
+      </ThemeProvider>
+    );
 
   }
 }
 
-export default function Home() {
-  return <HomeContent />;
+export default function JoinedPage() {
+  return <JoinedContent />;
 }

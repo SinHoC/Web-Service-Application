@@ -17,6 +17,11 @@ import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import { useForm } from "react-hook-form";
+import { Axios } from 'axios';
+import jwt from 'jwt-decode';
+import Paper from '@mui/material/Paper';
+import Title from './Title';
+
 
 function Copyright(props) {
   return (
@@ -65,7 +70,7 @@ function HomeContent() {
   }
 
   React.useEffect(() => {
-    if(orderOpen){
+    if (orderOpen) {
       setPickup(null)
       setArrival(null)
     }
@@ -73,93 +78,155 @@ function HomeContent() {
 
   const submitted = (values) => {
     console.log(values)
+    console.log("yo")
+    Axios.put()
   }
 
   window.addEventListener('load', function () {
     checkLogin()
   })
 
-  return (
-    <ThemeProvider theme={mdTheme}>
-      <Box sx={{ display: 'flex' }}>
-        <CssBaseline />
-        <Box
-          component="main"
-          sx={{
-            backgroundColor: (theme) =>
-              theme.palette.mode === 'light'
-                ? theme.palette.grey[100]
-                : theme.palette.grey[900],
-            flexGrow: 1,
-            height: '100vh',
-            overflow: 'auto',
-          }}
-        >
-          <Toolbar />
-          <Grid container justifyContent="center">
-            {homeLogin
-              ? <div><BroncoButton onClick={addOrder}>+ Create An Order</BroncoButton>
-                <Modal
-                  open={orderOpen}
-                  onClose={handleOrderClose}
-                  aria-labelledby="modal-modal-title"
-                  aria-describedby="modal-modal-description"
+  // Get loggin info
+  if(localStorage.getItem('token') != null){
+    var profile = localStorage.getItem('token');
+    var decode = jwt(profile);
+    var fullPhone = decode.phone_number
+    var phone = fullPhone.slice(1, fullPhone.length)
+    console.log(decode);
+  }
+
+  if (localStorage.getItem('token') == null) {
+    return (
+      <ThemeProvider theme={mdTheme}>
+        <Box sx={{ display: 'flex' }}>
+          <CssBaseline />
+          <Box
+            component="main"
+            sx={{
+              backgroundColor: (theme) =>
+                theme.palette.mode === 'light'
+                  ? theme.palette.grey[100]
+                  : theme.palette.grey[900],
+              flexGrow: 1,
+              height: '100vh',
+              overflow: 'auto',
+            }}
+          >
+            <Toolbar />
+            <Grid container justifyContent="center">
+              <Grid item xs={12} md={4} lg={3}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: 'auto',
+                  }}
                 >
-                  <Box sx={modalStyle} component='form' onSubmit={handleSubmit(submitted)}>
-                    <Typography id="modal-modal-title" variant="h6" component="h2">
-                      Enter item to order:
-                    </Typography>
-                    <TextField
-                      name="resturant"
-                      required
-                      label="Resturant name"
-                      {...register('resturantName')}
-                    />
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <Stack spacing={3}>
-                        <MobileTimePicker
-                          name="pickupTime"
-                          label="Estimated pickup time"
-                          value={pickup}
-                          required
-                          onChange={(newValue) => {
-                            setPickup(newValue)
-                          }}
-                          renderInput={(params) => <TextField {...params} {...register('pickupTime')}/>}
-                        />
-                        <MobileTimePicker
-                          name="arrivalTime"
-                          label="Estimated arrival time"
-                          value={arrival}
-                          required
-                          onChange={(newValue) => {
-                            setArrival(newValue)
-                          }}
-                          renderInput={(params) => <TextField {...params} {...register('arrivalTime')} />}
-                        />
-                      </Stack>
-                    </LocalizationProvider>
-                    <TextField
-                      name="meetingLocation"
-                      required
-                      label="Meeting location"
-                      {...register('meetingTime')}
-                    />
-                    <BroncoButton variant='contained' type='submit'>Submit</BroncoButton>
-                  </Box>
-                </Modal>
-              </div>
-              : <></>
-            }
-          </Grid>
-          <Container maxWidth="lg" sx={{ mt: 2, mb: 4 }}>
-            <Deposits />
-            <Copyright sx={{ pt: 4 }} />
-          </Container>
+                  <React.Fragment>
+                    <Title>You are not signed in.</Title>
+                  </React.Fragment>
+                </Paper>
+              </Grid>
+            </Grid>
+          </Box>
         </Box>
-      </Box>
-    </ThemeProvider>
-  );
+      </ThemeProvider>
+    )
+  }
+  else {
+    return (
+      <ThemeProvider theme={mdTheme}>
+        <Box sx={{ display: 'flex' }}>
+          <CssBaseline />
+          <Box
+            component="main"
+            sx={{
+              backgroundColor: (theme) =>
+                theme.palette.mode === 'light'
+                  ? theme.palette.grey[100]
+                  : theme.palette.grey[900],
+              flexGrow: 1,
+              height: '100vh',
+              overflow: 'auto',
+            }}
+          >
+            <Toolbar />
+            <Grid container justifyContent="center">
+              {homeLogin
+                ? <div><BroncoButton onClick={addOrder}>+ Create An Order</BroncoButton>
+                  <Modal
+                    open={orderOpen}
+                    onClose={handleOrderClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                  >
+                    <Box sx={modalStyle} component='form' onSubmit={handleSubmit(submitted)}>
+                      <Typography id="modal-modal-title" variant="h6" component="h2">
+                        Enter Order Details:
+                      </Typography>
+                      <TextField
+                        name="resturant"
+                        required
+                        label="Resturant name"
+                        {...register('resturant')}
+                      />
+                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <Stack spacing={3}>
+                          <MobileTimePicker
+                            name="pickupTime"
+                            label="Estimated pickup time"
+                            value={pickup}
+                            required
+                            onChange={(newValue) => {
+                              setPickup(newValue)
+                            }}
+                            renderInput={(params) => <TextField {...params} {...register('pickup')} />}
+                          />
+                          <MobileTimePicker
+                            name="arrivalTime"
+                            label="Estimated arrival time"
+                            value={arrival}
+                            required
+                            onChange={(newValue) => {
+                              setArrival(newValue)
+                            }}
+                            renderInput={(params) => <TextField {...params} {...register('arrival')} />}
+                          />
+                        </Stack>
+                      </LocalizationProvider>
+                      <TextField
+                        name="meetingLocation"
+                        required
+                        label="Meeting location"
+                        {...register('location')}
+                      />
+                      <TextField
+                        hidden={true}
+                        value={decode.name}
+                        {...register('name')}
+                      />
+                        <TextField
+                        hidden={true}
+                        value={phone}
+                        {...register('phoneNumber')}
+                      />
+                      <BroncoButton variant='contained' type='submit'>Submit</BroncoButton>
+                    </Box>
+                  </Modal>
+                </div>
+                : <></>
+              }
+            </Grid>
+            <Container maxWidth="lg" sx={{ mt: 2, mb: 4 }}>
+              <Deposits />
+              <Copyright sx={{ pt: 4 }} />
+            </Container>
+          </Box>
+        </Box>
+      </ThemeProvider>
+    );
+  }
 }
 
 export default function Home() {
