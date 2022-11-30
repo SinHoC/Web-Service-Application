@@ -26,7 +26,7 @@ public class DBService {
 	/** {
     "orderNumber": "50",
     "name": "Melvin",
-    "phoneNumber": "222-222-2222",
+    "phoneNumber": "2222222222",
     "restaurant": "Burger King",
     "pickup": "10:30 A.M",
     "arrival": "11:00 A.M",
@@ -41,8 +41,8 @@ public class DBService {
 		return collectionsApiFuture.get().getUpdateTime().toString();
 	}
 	
-	// api/join?documentId=10&namePhone=Andy111-111-1111&customer=111-111-1111&customer=Burger&customer=Frs
-	public String joinOrder(String documentId, String namePhone, List<String> customer) throws InterruptedException, ExecutionException {
+	// api/join?documentId=10&phone=1111111111&customer=Andy&customer=Burger&customer=Fries
+	public String joinOrder(String documentId, String phone, List<String> customer) throws InterruptedException, ExecutionException {
 		Firestore dbFirestore = FirestoreClient.getFirestore();
 		
 		DocumentReference documentReference = dbFirestore.collection("all_orders").document(documentId);
@@ -50,7 +50,7 @@ public class DBService {
 		Map<String, Object> updates1 = new HashMap<>();
 		Map<String, Object> updates2 = new HashMap<>();
 		
-		updates2.put(namePhone, customer);
+		updates2.put(phone, customer);
 		updates1.put("customers", updates2);
 		
 		// Update the customers map and merge with existing data
@@ -101,8 +101,8 @@ public class DBService {
 	}
 
 	// Method to get all orders that user created
-	// api/getCreated?name=Andy&phoneNumber=111-111-1111
-	public List<Order> getCreatedOrders(String name, String phoneNumber)
+	// api/getCreated?phone=1111111111
+	public List<Order> getCreatedOrders(String phone)
 			throws InterruptedException, ExecutionException {
 		// Connect to Firebase and Firestore client
 		Firestore dbFirestore = FirestoreClient.getFirestore();
@@ -111,7 +111,7 @@ public class DBService {
 		CollectionReference allOrders = dbFirestore.collection("all_orders");
 
 		// Create a query against the collection.
-		Query query = allOrders.whereEqualTo("name", name).whereEqualTo("phoneNumber", phoneNumber);
+		Query query = allOrders.whereEqualTo("phoneNumber", phone);
 
 		// Retrieve query results asynchronously using query.get()
 		ApiFuture<QuerySnapshot> querySnapshot = query.get();
@@ -129,8 +129,8 @@ public class DBService {
 	}
 
 	// Method to get all orders that user joined
-	// api/getJoined?namePhone=Melvin222-222-2222
-	public List<Order> getJoinedOrders(String namePhone)
+	// api/getJoined?phone=1111111111
+	public List<Order> getJoinedOrders(String phone)
 			throws InterruptedException, ExecutionException {
 		// Connect to Firebase and Firestore client
 		Firestore dbFirestore = FirestoreClient.getFirestore();
@@ -139,7 +139,7 @@ public class DBService {
 		CollectionReference allOrders = dbFirestore.collection("all_orders");
 
 		// Create a query against the collection.
-		Query query = allOrders.whereNotEqualTo("customers."+ namePhone, null);
+		Query query = allOrders.whereNotEqualTo("customers."+ phone, null);
 
 		// Retrieve query results asynchronously using query.get()
 		ApiFuture<QuerySnapshot> querySnapshot = query.get();

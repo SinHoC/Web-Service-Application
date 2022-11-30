@@ -41,8 +41,8 @@ public class WebController {
 	
 	// Get all orders for home page
 	@PutMapping("/join")
-	public String joinOrder(@RequestParam String documentId,@RequestParam String namePhone, @RequestParam(value="customer") List<String> customer) throws InterruptedException, ExecutionException {
-		return dbService.joinOrder(documentId, namePhone, customer);
+	public String joinOrder(@RequestParam String documentId,@RequestParam String phone, @RequestParam(value="customer") List<String> customer) throws InterruptedException, ExecutionException {
+		return dbService.joinOrder(documentId, phone, customer);
 	}
 	
 	// Get all orders for home page
@@ -53,13 +53,13 @@ public class WebController {
 	
 	// Get created orders for user
 	@GetMapping("/getCreated")
-	public List<Order> getCreatedOrders(@RequestParam String name, @RequestParam String phoneNumber) throws InterruptedException, ExecutionException {
-		return dbService.getCreatedOrders(name, phoneNumber);
+	public List<Order> getCreatedOrders(@RequestParam String phone) throws InterruptedException, ExecutionException {
+		return dbService.getCreatedOrders(phone);
 	}
 	
 	@GetMapping("/getJoined")
-	public List<Order> getJoined(@RequestParam String namePhone) throws InterruptedException, ExecutionException{
-		return dbService.getJoinedOrders(namePhone);
+	public List<Order> getJoined(@RequestParam String phone) throws InterruptedException, ExecutionException{
+		return dbService.getJoinedOrders(phone);
 	}
 	
 //	@GetMapping("/getCustomers")
